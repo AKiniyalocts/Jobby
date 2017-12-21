@@ -1,7 +1,7 @@
 package com.akiniyalocts.jobby.dagger.application
 
-import com.akiniyalocts.github_api.BuildConfig
-import com.akiniyalocts.github_api.GithubApi
+import com.akiniyalocts.jobby.model.GithubApi
+import com.akiniyalocts.jobby.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -22,17 +22,18 @@ class ApiModule {
     @Singleton
     fun provideApi(client: OkHttpClient, gsonConverterFactory: GsonConverterFactory) =
             Retrofit.Builder()
-                .baseUrl(GithubApi.BASE_URL)
-                .addConverterFactory(gsonConverterFactory)
-                .client(client)
-                .build()
+                    .baseUrl(GithubApi.BASE_URL)
+                    .addConverterFactory(gsonConverterFactory)
+                    .client(client)
+                    .build()
 
-
+    @Provides
+    @Singleton
+    fun providerGithubApi(retrofit: Retrofit) = retrofit.create(GithubApi::class.java)
 
     @Provides
     @Singleton
     fun provideGson() = GsonBuilder().create()
-
 
     @Provides
     @Singleton
@@ -51,7 +52,7 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun logginInterceptor():HttpLoggingInterceptor{
+    fun loggingInterceptor():HttpLoggingInterceptor{
 
         val loggingInterceptor = HttpLoggingInterceptor()
 
