@@ -7,6 +7,10 @@ import retrofit2.http.Query
 
 /**
  * Created by anthonykiniyalocts on 12/18/17.
+ *
+ * Rest API adapter
+ *
+ * see Retrofit: http://square.github.io/retrofit/
  */
 interface GithubApi {
 

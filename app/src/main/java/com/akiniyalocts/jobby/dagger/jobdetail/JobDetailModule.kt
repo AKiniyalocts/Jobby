@@ -10,6 +10,8 @@ import dagger.Provides
 
 /**
  * Created by anthonykiniyalocts on 12/21/17.
+ *
+ * Provide any dependencies needed for JobDetailActivity
  */
 @Module
 class JobDetailModule(private val jobDetailView:JobDetailView) {

@@ -6,15 +6,18 @@ import org.sufficientlysecure.htmltextview.HtmlTextView
 
 /**
  * Created by anthonykiniyalocts on 12/19/17.
+ *
+ * Custom data binding methods.
  */
 open class Bindings {
 
     companion object {
-        @JvmStatic @BindingAdapter("app:append_text")
-        fun appendText(textView: TextView, text:String){
-            textView.text = textView.text.toString().plus(" $text ")
-        }
 
+        /**
+         * expose html.setHtml() method for databinding
+         *
+         * see https://github.com/PrivacyApps/html-textview
+         */
         @JvmStatic @BindingAdapter("app:html_text")
         fun htmlText(textView: HtmlTextView, htmlText: String?){
             htmlText?.let {

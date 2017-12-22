@@ -3,23 +3,24 @@ package com.akiniyalocts.jobby.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 /**
  * Created by anthonykiniyalocts on 12/18/17.
+ *
+ * Job model class
  */
 data class Job(
-        var id : String,
-        @SerializedName("created_at") var createdAt : String,
-        var title : String,
-        var location : String,
-        var type : String,
-        var description : String,
-        @SerializedName("how_to_apply") var howToApply : String,
-        var company : String,
-        @SerializedName("company_url") var companyUrl : String?,
-        @SerializedName("company_logo") var companyLogo : String?,
-        @SerializedName("url")var jobUrl : String?
+        val id : String,
+        @SerializedName("created_at") val createdAt : String,
+        val title : String,
+        val location : String,
+        val type : String,
+        val description : String,
+        @SerializedName("how_to_apply") val howToApply : String,
+        val company : String,
+        @SerializedName("company_url") val companyUrl : String?,
+        @SerializedName("company_logo") val companyLogo : String?,
+        @SerializedName("url")val jobUrl : String?
         ) : Parcelable{
         constructor(parcel: Parcel) : this(
                 parcel.readString(),
@@ -61,6 +62,5 @@ data class Job(
                         return arrayOfNulls(size)
                 }
         }
-
 
 }

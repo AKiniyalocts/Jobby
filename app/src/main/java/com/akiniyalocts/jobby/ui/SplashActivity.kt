@@ -6,9 +6,14 @@ import android.support.v7.app.AppCompatActivity
 import com.akiniyalocts.jobby.R
 import com.akiniyalocts.jobby.ui.joblisting.imp.JobListingActivity
 
+/**
+ * SplashActivity
+ *
+ * show app icon and application name
+ */
 class SplashActivity : AppCompatActivity() {
 
-    val SPLASH_TIME : Long = 2 * 1000 // 2 seconds
+    private val SPLASH_TIME : Long = 2 * 1000 // 2 seconds
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,7 +3,7 @@ package com.akiniyalocts.jobby.base
 import javax.inject.Scope
 
 /**
- * Created by anthonykiniyalocts on 8/2/17.
+ * Created by anthonykiniyalocts
  */
 
 @Scope

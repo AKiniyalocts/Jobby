@@ -97,4 +97,6 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="job_description">Details:</string>
+    <string name="visit_website">Visit website</string>
+    <string name="view_listing">View listing</string>
 </resources>

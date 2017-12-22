@@ -25,17 +25,20 @@ class JobListInteractorImp @Inject constructor(private val githubApi: GithubApi,
     }
 
     @SuppressLint("MissingPermission")
-    override fun fetchCurrentLocation() {
+    override fun fetchCurrentLocation(callback: JobListPresenterImp.Callback) {
         fusedLocationProviderClient.lastLocation
                 .addOnSuccessListener { location ->
                     location?.let {
                         lastLocation = it
+
+                        this.fetchAllJobs(callback)
                     }
                 }
     }
 
-    override fun clearLastLocation() {
+    override fun clearLastLocation(callback: JobListPresenterImp.Callback) {
         this.lastLocation = null
+        this.fetchAllJobs(callback)
     }
 
     override fun fetchAllJobs(callback: JobListPresenterImp.Callback) {

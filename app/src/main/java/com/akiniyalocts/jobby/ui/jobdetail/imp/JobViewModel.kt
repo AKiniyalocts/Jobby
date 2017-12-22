@@ -5,8 +5,9 @@ import com.akiniyalocts.jobby.model.Job
 
 /**
  * Created by anthonykiniyalocts on 12/21/17.
+ *
+ * Basic view model to store single job
  */
 class JobViewModel : ViewModel(){
-
-    public var job : Job? = null
+    var job : Job? = null
 }

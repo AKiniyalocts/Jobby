@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 
 /**
- * Created by anthonykiniyalocts on 9/14/17.
+ * Intent contract for activities
  */
 interface IntentBuilder {
     fun buildIntent(context:Context) : Intent

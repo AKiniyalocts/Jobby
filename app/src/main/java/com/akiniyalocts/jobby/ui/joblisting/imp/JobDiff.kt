@@ -5,10 +5,13 @@ import com.akiniyalocts.jobby.model.Job
 
 /**
  * Created by anthonykiniyalocts on 12/19/17.
+ *
+ * DiffUtil callback for Job model object.
+ *
  */
 class JobDiff(val fresh : List<Job>, val old : List<Job>) : DiffUtil.Callback() {
 
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) = old[oldItemPosition].id === fresh[newItemPosition].id
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) = old[oldItemPosition].id == fresh[newItemPosition].id
 
     override fun getOldListSize(): Int = old.size
 

@@ -7,6 +7,9 @@ import com.akiniyalocts.jobby.ui.joblisting.JobListView
 
 /**
  * Created by anthonykiniyalocts on 12/19/17.
+ *
+ * Display job listing information in our jobListView
+ *
  */
 class JobListPresenterImp(val jobListView: JobListView, val jobListInteractor: JobListInteractor) : JobListPresenter {
 
@@ -16,6 +19,7 @@ class JobListPresenterImp(val jobListView: JobListView, val jobListInteractor: J
         jobListView.init()
 
         if(freshState) {
+            jobListView.setRefreshing(true)
             jobListInteractor.fetchAllJobs(callback)
         }
     }
@@ -26,17 +30,20 @@ class JobListPresenterImp(val jobListView: JobListView, val jobListInteractor: J
     }
 
     override fun enableCoarseLocation() {
-        jobListInteractor.fetchCurrentLocation()
+        jobListView.setRefreshing(true)
+        jobListInteractor.fetchCurrentLocation(callback)
     }
 
     override fun disableCoarseLocation() {
-        jobListInteractor.clearLastLocation()
+        jobListView.setRefreshing(true)
+        jobListInteractor.clearLastLocation(callback)
     }
 
-    override fun detach() {
+    override fun detach() {}
 
-    }
-
+    /**
+     * Interactor callback for loading jobs
+     */
     inner class Callback : JobListInteractorImp.JobListCallbacks{
 
         override fun onJobsFetched(jobs: List<Job>) {

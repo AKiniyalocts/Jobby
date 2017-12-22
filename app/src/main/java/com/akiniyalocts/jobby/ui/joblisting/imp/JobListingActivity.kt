@@ -3,10 +3,13 @@ package com.akiniyalocts.jobby.ui.joblisting.imp
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -17,6 +20,7 @@ import com.akiniyalocts.jobby.dagger.application.ApplicationComponent
 import com.akiniyalocts.jobby.dagger.joblisting.JobListModule
 import com.akiniyalocts.jobby.databinding.JobListBinding
 import com.akiniyalocts.jobby.model.Job
+import com.akiniyalocts.jobby.ui.DeviceInfo
 import com.akiniyalocts.jobby.ui.jobdetail.imp.JobDetailActivity
 import com.akiniyalocts.jobby.ui.joblisting.JobListPresenter
 import com.akiniyalocts.jobby.ui.joblisting.JobListView
@@ -24,6 +28,13 @@ import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
+/**
+ * JobListingActivity
+ *
+ * List any jobs available based on query parameters and location.
+ *
+ *
+ */
 class JobListingActivity : DaggerActivity(), JobListView {
 
     companion object : IntentBuilder{
@@ -41,25 +52,31 @@ class JobListingActivity : DaggerActivity(), JobListView {
 
     @Inject lateinit var adapter : JobListAdapter
 
+    @Inject lateinit var deviceInfo : DeviceInfo
+
     lateinit var binding : JobListBinding
 
     private lateinit var viewModel : JobsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        viewModel = ViewModelProviders.of(this).get(JobsViewModel::class.java)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)//initialize JobListBinding
+        viewModel = ViewModelProviders.of(this).get(JobsViewModel::class.java)//initialize viewModel
 
-        presenter.attach(savedInstanceState == null)
+        presenter.attach(savedInstanceState == null)//start presenter
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.detach()
+        presenter.detach()//cleanup presenter
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (grantResults.isNotEmpty()
+                && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+            binding.myLocation.isChecked = false//if the permission was not granted we need to uncheck our switch
+        }
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
@@ -67,17 +84,22 @@ class JobListingActivity : DaggerActivity(), JobListView {
         checkLocationPermissions()
     }
 
+    /**
+     * Request location permissions
+     */
     @AfterPermissionGranted(REQUEST_ACCESS_COARSE_LOCATION)
     fun checkLocationPermissions(){
         if(EasyPermissions.hasPermissions(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)){
             presenter.enableCoarseLocation()
-
         }else{
             EasyPermissions.requestPermissions(this, getString(R.string.location_permission_rationale), REQUEST_ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION)
         }
     }
 
 
+    /**
+     * Initialize our view
+     */
     override fun init() {
         setSupportActionBar(binding.toolbar)
 
@@ -85,14 +107,18 @@ class JobListingActivity : DaggerActivity(), JobListView {
         binding.refresh.setProgressBackgroundColorSchemeResource(R.color.colorPrimary)
         binding.refresh.setColorSchemeResources(R.color.colorAccent)
 
-        binding.jobsList.layoutManager = LinearLayoutManager(this)
+        if(deviceInfo.isLandscape){
+            binding.jobsList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        }else {
+            binding.jobsList.layoutManager = LinearLayoutManager(this)
+        }
         binding.jobsList.adapter = adapter
-        adapter.update(viewModel.getJobs())
+        adapter.update(viewModel.jobs)
 
         binding.cityName.setOnEditorActionListener(this)
         binding.jobDescription.setOnEditorActionListener(this)
 
-        binding.myLocation.setOnCheckedChangeListener { compoundButton, checked ->
+        binding.myLocation.setOnCheckedChangeListener { _, checked ->
             if(checked){
                 checkLocationPermissions()
             } else{
@@ -102,6 +128,9 @@ class JobListingActivity : DaggerActivity(), JobListView {
 
     }
 
+    /**
+     * EditText listener for query submission via the return button on the soft keyboard
+     */
     override fun onEditorAction(textView: TextView?, actionId: Int, keyEvent: KeyEvent?): Boolean {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             val cityName = binding.cityName.text.toString()
@@ -112,20 +141,32 @@ class JobListingActivity : DaggerActivity(), JobListView {
         return false
     }
 
+    /**
+     * Show/Hide swipe refresh view
+     */
     override fun setRefreshing(isRefreshing: Boolean) {
         binding.refresh.isRefreshing = isRefreshing
     }
 
+    /**
+     * go to JobDetailActivity
+     */
     override fun onJobClicked(job: Job) {
         startActivity(JobDetailActivity.buildJobIntent(this, job))
     }
 
+    /**
+     * Update adapter with newly fetched jobs
+     */
     override fun showJobs(jobs: List<Job>) {
-        viewModel.setJobs(jobs)
+        viewModel.jobs = jobs
         binding.jobs = jobs
         adapter.update(jobs)
     }
 
+    /**
+     * Display failure when fetching jobs
+     */
     override fun showFailure(reason: String?) {
         Snackbar.make(binding.root, "Failure: $reason", Snackbar.LENGTH_LONG).show()
     }

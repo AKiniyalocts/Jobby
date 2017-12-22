@@ -1,9 +1,13 @@
 package com.akiniyalocts.jobby.base
 
 /**
- * Created by anthonykiniyalocts on 8/2/17.
+ * Base MVP - View contract
  */
 interface View {
 
+    /**
+     * Initialize setup for views
+     * LayoutManagers, click listeners, etc.
+     */
     fun init()
 }

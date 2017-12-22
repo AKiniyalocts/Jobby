@@ -6,6 +6,8 @@ import com.akiniyalocts.jobby.dagger.application.*
 
 /**
  * Created by anthonykiniyalocts on 12/18/17.
+ *
+ * Custom Application class used to setup dagger
  */
 class JobbyApplication : Application() {
 
@@ -22,7 +24,7 @@ class JobbyApplication : Application() {
 
     private fun createAppComponent() {
         appComponent = DaggerApplicationComponent.builder()
-                .apiModule(ApiModule())
+                .apiModule(ApiModule(this))
                 .interactorModule(InteractorModule())
                 .androidModule(AndroidModule(this))
                 .build()

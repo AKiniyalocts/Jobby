@@ -6,6 +6,8 @@ import dagger.Subcomponent
 
 /**
  * Created by anthonykiniyalocts on 12/19/17.
+ *
+ * Subcomponent for our JobListActivity
  */
 @ActivityScope
 @Subcomponent(modules = [JobListModule::class])

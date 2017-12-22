@@ -12,6 +12,8 @@ import javax.inject.Singleton
 
 /**
  * Created by anthonykiniyalocts on 12/19/17.
+ *
+ * Provide any interactors needed throughout the application
  */
 @Module
 class InteractorModule {

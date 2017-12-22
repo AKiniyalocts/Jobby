@@ -7,6 +7,8 @@ import com.akiniyalocts.jobby.ui.joblisting.imp.JobListAdapter
 
 /**
  * Created by anthonykiniyalocts on 12/19/17.
+ *
+ * JobListView contract
  */
 interface JobListView : View, JobListAdapter.JobListener,  TextView.OnEditorActionListener{
     fun requestLocationPermissions()

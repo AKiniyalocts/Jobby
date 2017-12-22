@@ -2,6 +2,8 @@ package com.akiniyalocts.jobby.ui.joblisting
 
 /**
  * Created by anthonykiniyalocts on 12/19/17.
+ *
+ * JobListPresenter contract
  */
 interface JobListPresenter {
     fun attach(freshState : Boolean)

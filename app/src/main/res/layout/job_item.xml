@@ -50,7 +50,7 @@
                 android:fontFamily="sans-serif-condensed"
                 android:text="@{job.company}"
                 android:textAllCaps="false"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="normal|bold"
                 app:layout_constraintEnd_toEndOf="parent"

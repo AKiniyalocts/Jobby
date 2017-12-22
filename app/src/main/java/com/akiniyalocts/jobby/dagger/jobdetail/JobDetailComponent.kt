@@ -6,6 +6,8 @@ import dagger.Subcomponent
 
 /**
  * Created by anthonykiniyalocts on 12/21/17.
+ *
+ * Subcomponent for our JobDetailActivity
  */
 @ActivityScope
 @Subcomponent(modules = [JobDetailModule::class])

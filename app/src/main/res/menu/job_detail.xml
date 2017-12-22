@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/view_listing"
+        android:icon="@drawable/ic_launch_24dp"
+        android:title="@string/view_listing"
+        app:showAsAction="always"
+        />
+
+</menu>

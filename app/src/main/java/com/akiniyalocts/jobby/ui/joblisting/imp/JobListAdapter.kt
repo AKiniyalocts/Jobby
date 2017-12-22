@@ -15,6 +15,8 @@ import javax.inject.Inject
 
 /**
  * Created by anthonykiniyalocts on 12/19/17.
+ *
+ *
  */
 class JobListAdapter @Inject constructor(private val listener:JobListener) : RecyclerView.Adapter<BindingViewHolder<Job>>() {
 
@@ -32,12 +34,20 @@ class JobListAdapter @Inject constructor(private val listener:JobListener) : Rec
 
     override fun getItemCount() = jobs.size
 
+    /**
+     * Filter updates through JobDiff for free animations when updating
+     */
     fun update(freshJobs : List<Job>){
         val result = DiffUtil.calculateDiff(JobDiff(freshJobs, jobs))
         this.jobs = freshJobs
         result.dispatchUpdatesTo(this)
     }
 
+    /**
+     * ViewHolder for our job listing
+     *
+     * R.layout.job_item
+     */
     inner class JobViewHolder(itemView : View) : BindingViewHolder<Job>(itemView){
 
         private val binding : JobItemBinding = DataBindingUtil.bind(itemView)
