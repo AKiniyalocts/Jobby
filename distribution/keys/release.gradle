@@ -1,0 +1,7 @@
+
+project.ext {
+    releaseKeystore = 'distribution/keys/release.jks'
+    releaseKeystorePassword = 'vWzyZvZsVraG8t_PZpZlG?HWyVVc8ga_O-e2Zz7QZ7T7T7aHlihNswLJoFgymwb8'
+    releaseKeyAlias = 'release'
+    releaseKeyPassword = 'yp4eMSfZhAr7SBHoctcjJev6bXD_?9rasp1IEXZ8H1RQH6w3-_vVEgFifkqXPLpZ'
+}
